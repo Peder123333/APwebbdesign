@@ -472,7 +472,7 @@
     <li><a href="#features">Vad ingår</a></li>
     <li><a href="#pricing">Priser</a></li>
     <li><a href="#ownership">Äganderätt</a></li>
-    <li><a href="mailto:xxx@xxxxx.se">xxx@xxxxx.se</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#58202020182020202020762b3d"><span class="__cf_email__" data-cfemail="463e3e3e063e3e3e3e3e683523">[email&#160;protected]</span></a></li>
     <li><a href="tel:07xxxxxxxx">07x xxx xx xx</a></li>
     <li><a href="#contact" class="nav-cta">Kom igång</a></li>
   </ul>
@@ -628,7 +628,7 @@
 <section class="contact" id="contact">
   <h2>Redo att sätta <em>igång?</em></h2>
   <p>Berätta om ditt företag så hör vi av oss inom 24 timmar.</p>
-  <form class="contact-form" onsubmit="handleSubmit(event)">
+  <form class="contact-form" action="https://formspree.io/f/xzdakvql" method="POST" onsubmit="handleSubmit(event)">
     <input type="text" placeholder="Ditt namn" required>
     <input type="text" placeholder="Företagsnamn">
     <input type="tel" placeholder="Telefonnummer">
@@ -643,7 +643,7 @@
   <div>© 2025 AP Webbdesign · Stockholm</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -655,13 +655,4 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.textContent = 'Skickat! Vi hör av oss snart.';
-    btn.style.opacity = '0.6';
-    btn.disabled = true;
-  }
-</script>
-</body>
-</html>
+  function handl
