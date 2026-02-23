@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Webbdesign – Hemsidor för lokala företag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #fafafa;
+    --gray: #6b6b6b;
+    --light: #f0efed;
+    --border: rgba(0,0,0,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(250,250,250,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--gray);
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--black); }
+
+  .nav-cta {
+    background: var(--black) !important;
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 140px 40px 80px;
+    position: relative;
+  }
+
+  .hero-tag {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 7vw, 92px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    max-width: 820px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--gray); }
+
+  .hero p {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--gray);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    background: var(--black);
+    color: var(--white);
+    padding: 16px 36px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.8; }
+
+  .btn-secondary {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--black); }
+
+  .marquee-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    overflow: hidden;
+    background: var(--light);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    animation: marquee 22s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--gray);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gray); opacity: 0.4; }
+
+  .features {
+    padding: 140px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .feature-card {
+    background: var(--white);
+    padding: 48px 40px;
+    transition: background 0.3s;
+  }
+
+  .feature-card:hover { background: var(--light); }
+
+  .feature-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    color: rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+  }
+
+  .feature-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 14px;
+  }
+
+  .feature-card p {
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .pricing {
+    padding: 140px 60px;
+    background: var(--light);
+  }
+
+  .pricing-inner { max-width: 1200px; margin: 0 auto; }
+
+  .pricing-header { margin-bottom: 80px; }
+
+  .pricing-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+
+  .pricing-header p { font-size: 17px; color: var(--gray); font-weight: 300; }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .pricing-card {
+    background: var(--white);
+    padding: 48px 40px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+
+  .pricing-card.featured { background: var(--black); color: var(--white); border-color: var(--black); }
+
+  .pricing-badge {
+    position: absolute;
+    top: -12px; left: 40px;
+    background: var(--black);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+  }
+
+  .pricing-card.featured .pricing-badge { background: var(--white); color: var(--black); }
+
+  .pricing-card-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 24px;
+  }
+
+  .pricing-card.featured .pricing-card-label { color: rgba(255,255,255,0.5); }
+
+  .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 400;
+    letter-spacing: -2px;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  .price-note { font-size: 14px; color: var(--gray); margin-bottom: 36px; font-weight: 300; }
+
+  .pricing-card.featured .price-note { color: rgba(255,255,255,0.5); }
+
+  .pricing-divider { height: 1px; background: var(--border); margin-bottom: 32px; }
+
+  .pricing-card.featured .pricing-divider { background: rgba(255,255,255,0.1); }
+
+  .pricing-items { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+
+  .pricing-items li {
+    font-size: 14px;
+    color: var(--gray);
+    font-weight: 300;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .pricing-card.featured .pricing-items li { color: rgba(255,255,255,0.7); }
+
+  .pricing-items li::before { content: '→'; font-size: 12px; color: var(--black); margin-top: 1px; flex-shrink: 0; }
+
+  .pricing-card.featured .pricing-items li::before { color: rgba(255,255,255,0.4); }
+
+  .ownership { padding: 140px 60px; max-width: 1200px; margin: 0 auto; }
+
+  .ownership-split { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+
+  .ownership-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .ownership-text p { font-size: 16px; color: var(--gray); font-weight: 300; line-height: 1.8; margin-bottom: 16px; }
+
+  .ownership-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .ownership-cell { background: var(--light); padding: 36px 28px; }
+
+  .ownership-cell-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 8px;
+  }
+
+  .ownership-cell-value { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 400; }
+
+  .contact {
+    padding: 140px 60px;
+    background: var(--black);
+    color: var(--white);
+    text-align: center;
+  }
+
+  .contact h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 400;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    line-height: 1.05;
+  }
+
+  .contact h2 em { font-style: italic; color: rgba(255,255,255,0.35); }
+
+  .contact > p { font-size: 17px; color: rgba(255,255,255,0.5); font-weight: 300; margin-bottom: 60px; }
+
+  .contact-form { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+
+  .contact-form input, .contact-form textarea {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white);
+    padding: 18px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255,255,255,0.3); }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: rgba(255,255,255,0.35); }
+  .contact-form textarea { height: 140px; resize: none; }
+
+  .contact-form button {
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    padding: 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: opacity 0.2s;
+  }
+
+  .contact-form button:hover { opacity: 0.85; }
+
+  footer {
+    padding: 36px 60px;
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 13px;
+    font-weight: 300;
+  }
+
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 16px; color: rgba(255,255,255,0.5); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 120px 24px 60px; }
+    .features { padding: 80px 24px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .pricing { padding: 80px 24px; }
+    .pricing-cards { grid-template-columns: 1fr; }
+    .ownership { padding: 80px 24px; }
+    .ownership-split { grid-template-columns: 1fr; gap: 48px; }
+    .contact { padding: 80px 24px; }
+    footer { padding: 28px 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AP Webbdesign</div>
+  <ul class="nav-links">
+    <li><a href="#features">Vad ingår</a></li>
+    <li><a href="#pricing">Priser</a></li>
+    <li><a href="#ownership">Äganderätt</a></li>
+    <li><a href="mailto:xxx@xxxxx.se">xxx@xxxxx.se</a></li>
+    <li><a href="tel:07xxxxxxxx">07x xxx xx xx</a></li>
+    <li><a href="#contact" class="nav-cta">Kom igång</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <span class="hero-tag">Webbdesign för lokala företag i Stockholm</span>
+  <h1>En hemsida som <em>faktiskt</em> representerar ditt företag</h1>
+  <p>Vi bygger proffsiga, snabba och mobilanpassade hemsidor – till ett pris som förvånar.</p>
+  <div class="hero-buttons">
+    <a href="#pricing" class="btn-primary">Se priser</a>
+    <a href="#contact" class="btn-secondary">Kontakta oss →</a>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">Frisörsalonger <span class="dot"></span></div>
+    <div class="marquee-item">Thai Massage <span class="dot"></span></div>
+    <div class="marquee-item">Hantverkare <span class="dot"></span></div>
+    <div class="marquee-item">Skönhetskliniker <span class="dot"></span></div>
+    <div class="marquee-item">Solarier <span class="dot"></span></div>
+    <div class="marquee-item">Nagelstudior <span class="dot"></span></div>
+    <div class="marquee-item">Personliga tränare <span class="dot"></span></div>
+    <div class="marquee-item">Städfirmor <span class="dot"></span></div>
+    <div class="marquee-item">Frisörsalonger <span class="dot"></span></div>
+    <div class="marquee-item">Thai Massage <span class="dot"></span></div>
+    <div class="marquee-item">Hantverkare <span class="dot"></span></div>
+    <div class="marquee-item">Skönhetskliniker <span class="dot"></span></div>
+    <div class="marquee-item">Solarier <span class="dot"></span></div>
+    <div class="marquee-item">Nagelstudior <span class="dot"></span></div>
+    <div class="marquee-item">Personliga tränare <span class="dot"></span></div>
+    <div class="marquee-item">Städfirmor <span class="dot"></span></div>
+  </div>
+</div>
+
+<section class="features" id="features">
+  <div class="section-label">Vad du får</div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-num">01</div>
+      <h3>Du äger allt</h3>
+      <p>Domänen registreras i ditt namn. Koden och hosten ligger på ditt eget konto. Vi låser inte in dig – du är helt fri.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">02</div>
+      <h3>Mobilanpassad</h3>
+      <p>Mer än 70% av dina kunder hittar dig via mobilen. Din sida ser perfekt ut på alla skärmar – alltid.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">03</div>
+      <h3>Snabb leverans</h3>
+      <p>Ingen månaders väntan. Vi levererar din färdiga hemsida snabbt och du godkänner innan vi avslutar.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">04</div>
+      <h3>Google Maps</h3>
+      <p>Kunderna hittar dig enkelt. Vi integrerar Google Maps direkt på sidan så att ingen behöver leta.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">05</div>
+      <h3>Kontaktformulär</h3>
+      <p>Dina kunder kan nå dig direkt via sidan. Enkelt för dem, effektivt för dig.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">06</div>
+      <h3>3 månaders garanti</h3>
+      <p>Om något tekniskt går fel efter leverans åtgärdar vi det kostnadsfritt. Alltid.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header reveal">
+      <h2>Priset som förvånar</h2>
+      <p>Kvalitet ska inte kosta en förmögenhet. Det tror vi på.</p>
+    </div>
+    <div class="pricing-cards">
+      <div class="pricing-card featured reveal">
+        <div class="pricing-badge">Mest populär</div>
+        <div class="pricing-card-label">Grundpaket</div>
+        <div class="price">5 000</div>
+        <div class="price-note">kr · engångskostnad</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-items">
+          <li>Upp till 4 sidor (Start, Om oss, Priser, Kontakt)</li>
+          <li>Kontaktformulär</li>
+          <li>Google Maps integrerat</li>
+          <li>Mobilanpassad</li>
+          <li>Bildgalleri</li>
+          <li>Du äger allt – domän, kod och hosting på ditt konto</li>
+          <li>3 månaders garanti</li>
+        </ul>
+      </div>
+      <div class="pricing-card reveal">
+        <div class="pricing-card-label">Månadsavgift</div>
+        <div class="price">799</div>
+        <div class="price-note">kr · per månad</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-items">
+          <li>Upp till 2 ändringar per månad</li>
+          <li>Support via mail inom 24h</li>
+          <li>Vi ser till att allt fungerar</li>
+          <li>En månads uppsägningstid</li>
+          <li>Din sida lever vidare vid avslut</li>
+        </ul>
+      </div>
+      <div class="pricing-card reveal">
+        <div class="pricing-card-label">Tillägg</div>
+        <div class="price">1 000</div>
+        <div class="price-note">kr · per tillägg</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-items">
+          <li>Bokningssystem</li>
+          <li>SEO-grundoptimering</li>
+          <li>Ytterligare funktioner efter önskemål</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ownership" id="ownership">
+  <div class="ownership-split">
+    <div class="ownership-text reveal">
+      <h2>Du äger allt, från dag ett.</h2>
+      <p>De flesta webbbyråer låser in dig. Din domän, din kod och din data sitter hos dem. Vill du lämna? Lycka till.</p>
+      <p>Vi gör tvärtom. Din domän registreras i ditt namn. Hemsidan byggs på ditt egna GitHub och Vercel-konto. Du kan ta din sida och gå när du vill.</p>
+      <p>Vi tjänar ditt förtroende varje månad – vi låser inte fast det.</p>
+    </div>
+    <div class="ownership-visual reveal">
+      <div class="ownership-cell">
+        <div class="ownership-cell-label">Domän</div>
+        <div class="ownership-cell-value">Ditt namn</div>
+      </div>
+      <div class="ownership-cell">
+        <div class="ownership-cell-label">Kod</div>
+        <div class="ownership-cell-value">Ditt GitHub</div>
+      </div>
+      <div class="ownership-cell">
+        <div class="ownership-cell-label">Hosting</div>
+        <div class="ownership-cell-value">Ditt Vercel</div>
+      </div>
+      <div class="ownership-cell">
+        <div class="ownership-cell-label">Garanti</div>
+        <div class="ownership-cell-value">3 månader</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Redo att sätta <em>igång?</em></h2>
+  <p>Berätta om ditt företag så hör vi av oss inom 24 timmar.</p>
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <input type="text" placeholder="Ditt namn" required>
+    <input type="text" placeholder="Företagsnamn">
+    <input type="tel" placeholder="Telefonnummer">
+    <input type="email" placeholder="E-postadress" required>
+    <textarea placeholder="Berätta kort om ditt företag och vad du behöver..."></textarea>
+    <button type="submit">Skicka förfrågan</button>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-logo">AP Webbdesign</div>
+  <div>© 2025 AP Webbdesign · Stockholm</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Skickat! Vi hör av oss snart.';
+    btn.style.opacity = '0.6';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
